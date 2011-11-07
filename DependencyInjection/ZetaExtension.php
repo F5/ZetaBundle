@@ -11,39 +11,17 @@
  * to kontakt@beberlei.de so I can send you a copy immediately.
  */
 
-namespace Bundle\ZetaBundle\DependencyInjection;
+namespace F5\Bundle\ZetaBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class ZetaExtension extends Extension
 {
-    /**
-     * @param array $config
-     * @param BuilderConfiguration $builder
-     */
-    public function searchLoad($config, ContainerBuilder $builder)
-    {
-        $loader = new XmlFileLoader($builder, __DIR__.'/../Resources/config');
-        $loader->load('zetaSearch.xml');
-
-        foreach (array('solr', 'zendlucene', 'xml-manager') AS $comp) {
-            if (isset($config[$comp])) {
-                $builder->setParameter($comp, $config[$comp]);
-            }
-        }
-
-        if (isset($config['manager'])) {
-            $builder->setAlias('zeta.search.manager', $config['manager']);
-        }
-        if (isset($config['handler'])) {
-            $builder->setAlias('zeta.search.handler', $config['handler']);
-        }
-
-        return $builder;
-    }
-
     public function getAlias()
     {
         return 'zeta';
@@ -57,5 +35,36 @@ class ZetaExtension extends Extension
     public function getXsdValidationBasePath()
     {
         return false;
+    }
+
+    /**
+     * Loads a specific configuration.
+     *
+     * @param array            $config    An array of configuration values
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     *
+     * @throws \InvalidArgumentException When provided tag is not defined in this extension
+     *
+     * @api
+     */
+    function load(array $config, ContainerBuilder $container)
+    {
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('zetaSearch.xml');
+
+        $config = $config[0]["search"];
+
+        foreach (array('solr', 'zendlucene', 'xml-manager') AS $comp) {
+            if (isset($config[$comp])) {
+                $container->setParameter($comp, $config[$comp]);
+            }
+        }
+
+        if (isset($config['manager'])) {
+            $container->setAlias('zeta.search.manager', $config['manager']);
+        }
+        if (isset($config['handler'])) {
+            $container->setAlias('zeta.search.handler', $config['handler']);
+        }
     }
 }

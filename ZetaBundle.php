@@ -11,11 +11,11 @@
  * to kontakt@beberlei.de so I can send you a copy immediately.
  */
 
-namespace Bundle\ZetaBundle;
+namespace F5\Bundle\ZetaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Bundle\ZetaBundle\DependencyInjection\ZetaExtension;
+use F5\Bundle\ZetaBundle\DependencyInjection\ZetaExtension;
 use Symfony\Component\DependencyInjection\Loader\Loader;
 
 class ZetaBundle extends Bundle
