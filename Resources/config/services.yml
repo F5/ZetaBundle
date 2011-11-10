@@ -1,0 +1,11 @@
+parameters:
+#    f5_electronic_things.example.class: F5\ElectronicThingsBundle\Example
+
+services:
+    f5_zeta.search.listener:
+        class: F5\Bundle\ZetaBundle\EventListener\EzcSearchListener
+        tags:
+            - {name: doctrine.event_listener, event: preUpdate}
+            - {name: doctrine.event_listener, event: prePersist}
+            - {name: doctrine.event_listener, event: preDelete}
+        arguments: [@zeta.search.session]
