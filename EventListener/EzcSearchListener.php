@@ -1,6 +1,6 @@
 <?php
 
-namespace F5\Bundle\ZetaSearchBundle\EventListener;
+namespace F5\Bundle\ZetaBundle\EventListener;
 
 use \ezcSearchSession;
 use \ezcBasePersistable;

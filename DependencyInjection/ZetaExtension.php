@@ -11,7 +11,7 @@
  * to kontakt@beberlei.de so I can send you a copy immediately.
  */
 
-namespace F5\Bundle\ZetaSearchBundle\DependencyInjection;
+namespace F5\Bundle\ZetaBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,11 +20,11 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
-class ZetaSearchExtension extends Extension
+class ZetaExtension extends Extension
 {
     public function getAlias()
     {
-        return 'zeta_search';
+        return 'zeta';
     }
 
     public function getNamespace()
@@ -52,14 +52,22 @@ class ZetaSearchExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $this->remapParametersNamespaces($config, $container, array(
-            'solr' => "zeta_search.solr.%s",
-            'xml-manager' => "zeta_search.xml-manager.%s",
-            'zendlucene' => "zeta_search.zendlucene.%s",
+        $this->remapParametersNamespaces($config["search"], $container, array(
+            "solr" => "zeta.search.solr.%s",
         ));
 
-        $container->setAlias('zeta_search.manager', $config['manager']);
-        $container->setAlias('zeta_search.handler', $config['handler']);
+        $this->remapParametersNamespaces($config["search"], $container, array(
+            "xml-manager" => "zeta.search.xml-manager.%s",
+        ));
+
+        $this->remapParametersNamespaces($config["search"], $container, array(
+            "zendlucene" => "zeta.search.zendlucene.%s",
+        ));
+
+        if(null !== $config["search"]) {
+            $container->setAlias('zeta.search.manager', $config['search']['manager']);
+            $container->setAlias('zeta.search.handler', $config['search']['handler']);
+        }
         
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

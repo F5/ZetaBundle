@@ -1,34 +1,34 @@
 parameters:
-    zeta_search.session.class: ezcSearchSession
-    zeta_search.manager.embedded.class: ezcSearchEmbeddedManager
-    zeta_search.manager.xml.class: ezcSearchXmlManager
-    zeta_search.handler.solr.class: ezcSearchSolrHandler
-    zeta_search.handler.zendlucene.class: ezcSearchZendLuceneHandler
+    zeta.search.session.class: ezcSearchSession
+    zeta.search.manager.embedded.class: ezcSearchEmbeddedManager
+    zeta.search.manager.xml.class: ezcSearchXmlManager
+    zeta.search.handler.solr.class: ezcSearchSolrHandler
+    zeta.search.handler.zendlucene.class: ezcSearchZendLuceneHandler
 
 services:
-    zeta_search.listener:
-        class: F5\Bundle\ZetaSearchBundle\EventListener\EzcSearchListener
+    zeta.search.listener:
+        class: F5\Bundle\ZetaBundle\EventListener\EzcSearchListener
         tags:
             - {name: doctrine.event_listener, event: preUpdate}
             - {name: doctrine.event_listener, event: prePersist}
             - {name: doctrine.event_listener, event: preDelete}
-        arguments: [@zeta_search.session]
+        arguments: [@zeta.search.session]
 
-    zeta_search.session:
-        class: %zeta_search.session.class%
-        arguments: [@zeta_search.handler, @zeta_search.manager]
+    zeta.search.session:
+        class: %zeta.search.session.class%
+        arguments: [@zeta.search.handler, @zeta.search.manager]
 
-    zeta_search.manager.embedded:
-        class: %zeta_search.manager.embedded.class%
+    zeta.search.manager.embedded:
+        class: %zeta.search.manager.embedded.class%
 
-    zeta_search.manager.xml:
-        class: %zeta_search.manager.xml.class%
-        arguments: [%zeta_search.xml-manager.path%]
+    zeta.search.manager.xml:
+        class: %zeta.search.manager.xml.class%
+        arguments: [%zeta.search.xml-manager.path%]
 
-    zeta_search.handler.solr:
-        class: %zeta_search.handler.solr.class%
-        arguments: [%zeta_search.solr.host%,%zeta_search.solr.port%,%zeta_search.solr.location%]
+    zeta.search.handler.solr:
+        class: %zeta.search.handler.solr.class%
+        arguments: [%zeta.search.solr.host%,%zeta.search.solr.port%,%zeta.search.solr.location%]
 
-    zeta_search.handler.zendlucene:
-        class: %zeta_search.handler.zendlucene.class%
-        arguments: [%zeta_search.zendlucene.data_dir%]
+    zeta.search.handler.zendlucene:
+        class: %zeta.search.handler.zendlucene.class%
+        arguments: [%zeta.search.zendlucene.data_dir%]

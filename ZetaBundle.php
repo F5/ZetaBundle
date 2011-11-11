@@ -11,14 +11,14 @@
  * to kontakt@beberlei.de so I can send you a copy immediately.
  */
 
-namespace F5\Bundle\ZetaSearchBundle;
+namespace F5\Bundle\ZetaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use F5\Bundle\ZetaSearchBundle\DependencyInjection\ZetaSearchExtension;
+use F5\Bundle\ZetaBundle\DependencyInjection\ZetaExtension;
 use Symfony\Component\DependencyInjection\Loader\Loader;
 
-class ZetaSearchBundle extends Bundle
+class ZetaBundle extends Bundle
 {
     /**
      * Customizes the Container instance.
@@ -29,7 +29,7 @@ class ZetaSearchBundle extends Bundle
      */
     public function buildContainer(ContainerInterface $container)
     {
-        Loader::registerExtension(new ZetaSearchExtension());
+        Loader::registerExtension(new ZetaExtension());
     }
 
     public function getNamespace()
