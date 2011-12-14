@@ -15,21 +15,21 @@ class EzcSearchListener
         $this->searchSession = $searchSession;
     }
 
-    public function preUpdate(LifecycleEventArgs $args)
+    public function postUpdate(LifecycleEventArgs $args)
     {
         if ($args->getEntity() instanceof ezcBasePersistable) {
             $this->searchSession->index($args->getEntity());
         }
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args)
     {
         if ($args->getEntity() instanceof ezcBasePersistable) {
             $this->searchSession->index($args->getEntity());
         }
     }
 
-    public function preDelete(LifecycleEventArgs $args)
+    public function postDelete(LifecycleEventArgs $args)
     {
         if ($args->getEntity() instanceof ezcBasePersistable) {
             $this->searchSession->deleteById($args->getEntity()->getId(),get_class($args->getEntity()));
