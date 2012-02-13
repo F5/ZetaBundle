@@ -32,3 +32,9 @@ services:
     zeta.search.handler.zendlucene:
         class: %zeta.search.handler.zendlucene.class%
         arguments: [%zeta.search.zendlucene.data_dir%]
+
+    zeta.search.paginator.subscriber:
+        class: F5\Bundle\ZetaBundle\Subscriber\PaginateZetaQuerySubscriber
+        arguments: [@zeta.search.session]
+        tags:
+            - {name: knp_paginator.subscriber }
