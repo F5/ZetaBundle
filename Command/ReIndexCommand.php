@@ -54,6 +54,10 @@ class ReIndexCommand extends ContainerAwareCommand
         $session = $this->getContainer()->get('zeta.search.session');
 
         foreach ($metadata->getMetadata() as $m) {
+            $m->initializeReflection(new \Doctrine\Common\Persistence\Mapping\RuntimeReflectionService);
+
+            if(!in_array('ezcBasePersistable',$m->getReflectionClass()->getInterfaceNames())) continue;
+            
             // Delete all the entities!
             $this->log("Deleting all the entities");
             $session->beginTransaction();
