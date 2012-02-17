@@ -25,6 +25,7 @@ class PaginateZetaQuerySubscriber implements EventSubscriberInterface
             $event->items = $items->documents;
             //FIXME: Horrible horrible hack to pass the facets back
             $event->target->facets = $items->facets;
+            $event->target->facet_queries = $items->facet_queries;
             $event->stopPropagation();
         }
     }
