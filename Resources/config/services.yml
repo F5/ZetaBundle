@@ -9,9 +9,7 @@ services:
     zeta.search.listener:
         class: F5\Bundle\ZetaBundle\EventListener\EzcSearchListener
         tags:
-            - {name: doctrine.event_listener, event: postUpdate}
-            - {name: doctrine.event_listener, event: postPersist}
-            - {name: doctrine.event_listener, event: postDelete}
+            - {name: doctrine.event_subscriber}
         arguments: [@zeta.search.session]
 
     zeta.search.session:
