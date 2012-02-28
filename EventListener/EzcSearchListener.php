@@ -31,7 +31,7 @@ class EzcSearchListener implements EventSubscriber
         }
     }
 
-    public function postDelete(LifecycleEventArgs $args)
+    public function postRemove(LifecycleEventArgs $args)
     {
         if ($args->getEntity() instanceof ezcBasePersistable) {
             $this->searchSession->deleteById($args->getEntity()->getId(),get_class($args->getEntity()));
